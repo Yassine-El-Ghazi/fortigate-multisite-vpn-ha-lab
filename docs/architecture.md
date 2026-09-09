@@ -88,3 +88,7 @@ Private inter-site traffic and Internet traffic use separate policies:
 | HA control | HQ FortiGate heartbeat link | N/A |
 
 This keeps original private addresses intact inside the VPN while still allowing both sites to access the Internet independently.
+
+## Evidence
+
+![Full topology](../evidence/architecture.webp)

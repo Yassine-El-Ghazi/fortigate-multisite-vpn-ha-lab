@@ -6,6 +6,8 @@ A two-site network lab built in **EVE-NG** during my 2026 PFA internship at **CB
 >
 > This is a personal portfolio publication by the author and does not represent an official statement or security baseline from CBI or any vendor. See [NOTICE.md](NOTICE.md).
 
+![EVE-NG multi-site topology](evidence/architecture.webp)
+
 ## What was implemented
 
 - Two private LANs: `192.168.10.0/24` (HQ) and `192.168.20.0/24` (remote)
@@ -67,7 +69,31 @@ The final lab was validated at multiple layers:
 | HA failover | Secondary promoted and traffic recovered |
 | Post-failover VPN | Selector and remote route restored |
 
-Selected evidence is summarized in the public documentation and sanitized configuration files. Raw PCAP/PCAPNG captures and environment screenshots are intentionally excluded from the repository to avoid publishing unnecessary environment identifiers or metadata.
+Selected evidence:
+
+### Dynamic-peer Phase 1
+
+| HQ | Remote |
+|---|---|
+| ![HQ Phase 1](evidence/ipsec-phase1-hq.webp) | ![Remote Phase 1](evidence/ipsec-phase1-remote.webp) |
+
+### Final routing
+
+| HQ | Remote |
+|---|---|
+| ![HQ routing](evidence/routing-hq.webp) | ![Remote routing](evidence/routing-remote.webp) |
+
+### Application and packet-level verification
+
+![RDP session across the VPN](evidence/rdp-session.webp)
+
+![LAN RDP versus WAN ESP](evidence/lan-vs-wan-ipsec.webp)
+
+### HA failover
+
+![Continuous ping during HA failover](evidence/ha-failover-ping.webp)
+
+![VPN and route restored after failover](evidence/post-failover-vpn.webp)
 
 See [docs/validation.md](docs/validation.md) for the validation sequence and commands.
 
@@ -95,7 +121,7 @@ See [docs/validation.md](docs/validation.md) for the validation sequence and com
 │   ├── validation.md
 │   └── production-hardening.md
 └── evidence/
-    └── README.md
+    └── selected screenshots from final validation
 ```
 
 ## Lab configuration warning

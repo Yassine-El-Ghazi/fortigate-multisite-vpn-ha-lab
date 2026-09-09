@@ -16,7 +16,9 @@ Expected final state:
 selectors(total,up): 1/1
 ```
 
-Observed on both peers: `selectors(total,up): 1/1`.
+| HQ | Remote |
+|---|---|
+| ![HQ tunnel](../evidence/tunnel-status-hq.webp) | ![Remote tunnel](../evidence/tunnel-status-remote.webp) |
 
 ## 2. Routing
 
@@ -26,7 +28,9 @@ get router info routing-table all
 
 HQ learned the remote LAN through the active negotiated dynamic VPN path. The remote side used its route to the HQ LAN through `VPN-REMOTE-HQ`.
 
-Observed: HQ installed the remote protected subnet through the active negotiated dynamic peer; the remote site routed the HQ subnet through `VPN-REMOTE-HQ`.
+| HQ | Remote |
+|---|---|
+| ![HQ route](../evidence/routing-hq.webp) | ![Remote route](../evidence/routing-remote.webp) |
 
 ## 3. ICMP and TCP/3389
 
@@ -36,6 +40,8 @@ Connectivity was checked with:
 - TCP port `3389`;
 - an interactive RDP session.
 
+![RDP across the VPN](../evidence/rdp-session.webp)
+
 ## 4. Packet-level IPsec verification
 
 The same RDP activity was observed on two points:
@@ -43,7 +49,9 @@ The same RDP activity was observed on two points:
 - **LAN side:** original private TCP/3389 traffic;
 - **WAN side:** ESP between FortiGate WAN addresses.
 
-This verifies that the application traffic crossed the simulated WAN inside IPsec rather than in plaintext. The raw capture is intentionally not published.
+![LAN vs WAN packet capture](../evidence/lan-vs-wan-ipsec.webp)
+
+This verifies that the application traffic crossed the simulated WAN inside IPsec rather than in plaintext.
 
 ## 5. Independent Internet access
 
@@ -55,12 +63,16 @@ This separation avoids treating successful Internet NAT as evidence that VPN for
 
 Before failure, both HQ FortiGate members were verified as synchronized. A continuous ping was then run while the active HQ unit was stopped.
 
+![Ping during failover](../evidence/ha-failover-ping.webp)
+
 The final test observed:
 
 - secondary promotion to primary;
 - recovery after two missed ICMP probes;
 - restoration of the IPsec selector;
 - restoration of the remote route.
+
+![Post-failover VPN state](../evidence/post-failover-vpn.webp)
 
 ## Acceptance summary
 

@@ -106,6 +106,8 @@ After the remote peer reconnected, HQ learned the remote-subnet route through th
 
 The important difference is that the working route is associated with the active negotiated peer rather than just the generic dial-up interface.
 
+![HQ final route](../evidence/routing-hq.webp)
+
 ## Offload note
 
 `auto-asic-offload disable` was used during troubleshooting so software flow debugging could expose the packet path. It was **not** the routing fix and is not required as a general production setting.
