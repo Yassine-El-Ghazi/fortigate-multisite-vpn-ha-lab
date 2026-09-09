@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this lab material, please cite the repository."
+title: "FortiGate Multi-Site VPN & HA Lab"
+type: software
+authors:
+  - family-names: "El Ghazi"
+    given-names: "Yassine"
+year: 2026
+repository-code: "https://github.com/Yassine-El-Ghazi/fortigate-multisite-vpn-ha-lab"
+license: MIT
+keywords:
+  - FortiGate
+  - IPsec
+  - IKEv2
+  - EVE-NG
+  - high availability
+  - network security

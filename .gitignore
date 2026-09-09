@@ -1,0 +1,30 @@
+# Local lab / vendor artifacts
+*.qcow2
+*.vmdk
+*.vdi
+*.iso
+*.img
+*.unl
+*.eve
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Captures are intentionally not published from this lab
+*.pcap
+*.pcapng
+
+# Credentials / local environment
+.env
+.env.*
+*.secret
+secrets/
+credentials/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*~

@@ -1,0 +1,53 @@
+name: Repository checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  hygiene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reject unredacted FortiGate secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RInE 'set (psksecret|password) "[^<][^"]*"' configs/; then
+            echo "::error::A FortiGate secret appears to be unredacted."
+            exit 1
+          fi
+
+
+      - name: Reject obvious personal contact data
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RIniE --exclude='*.png' --exclude='repo-checks.yml' --exclude-dir='.git'             '[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}|+212[[:space:].-]*[0-9]' .; then
+            echo "::error::Unexpected personal contact data detected."
+            exit 1
+          fi
+
+      - name: Reject raw packet captures
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find . -type f ( -iname '*.pcap' -o -iname '*.pcapng' ) -print -quit | grep -q .; then
+            echo "::error::Raw captures are intentionally excluded from the public repository."
+            exit 1
+          fi
+
+      - name: Check large files
+        shell: bash
+        run: |
+          set -euo pipefail
+          large_files="$(find . -type f -not -path './.git/*' -size +10M -print)"
+          if [ -n "$large_files" ]; then
+            echo "$large_files"
+            echo "::error::Files larger than 10 MB require review before publication."
+            exit 1
+          fi
