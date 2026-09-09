@@ -22,12 +22,12 @@ jobs:
             exit 1
           fi
 
-
       - name: Reject obvious personal contact data
         shell: bash
         run: |
           set -euo pipefail
-          if grep -RIniE --exclude='*.png' --exclude='repo-checks.yml' --exclude-dir='.git'             '[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}|+212[[:space:].-]*[0-9]' .; then
+          if grep -RIniE --exclude='repo-checks.yml' --exclude-dir='.git' \
+            '[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|\+212[[:space:].-]*[0-9]' .; then
             echo "::error::Unexpected personal contact data detected."
             exit 1
           fi
@@ -36,7 +36,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if find . -type f ( -iname '*.pcap' -o -iname '*.pcapng' ) -print -quit | grep -q .; then
+          if find . -type f \( -iname '*.pcap' -o -iname '*.pcapng' \) -print -quit | grep -q .; then
             echo "::error::Raw captures are intentionally excluded from the public repository."
             exit 1
           fi
